@@ -71,11 +71,18 @@ body {
 	align-items: center;
 }
 
-.editor .slide {
+.slide {
 	display: none;
-	width: 90%;
+	justify-content: center;
+	align-items: center;
+	width: 80%;
 	background-color: #FFF;
 }
 
+.slide .content {
+	width: 90%;
+	background-color: #eee;
+}
+
 .preview.active { box-shadow: 0 0 0 4px #F88193 inset; }
-.slide.active { display: block; }
+.slide.active { display: flex; }
