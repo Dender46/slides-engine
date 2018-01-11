@@ -47,13 +47,13 @@ body {
 }
 
 /*to keep 16:9 aspect ratio*/
-.preview::before, .slide::before {
+.preview::before, .slide::before, .content::before {
 	content: "";
 	float: left;
 	padding-bottom: 56.25%;
 }
 
-.preview::after, .slide::after { /* to clear float */
+.preview::after, .slide::after, .content::after { /* to clear float */
 	content: " ";
 	clear: left;
 	display: table;
@@ -80,7 +80,7 @@ body {
 }
 
 .slide .content {
-	width: 90%;
+	width: 85%;
 	background-color: #eee;
 }
 
