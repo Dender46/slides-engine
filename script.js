@@ -3,9 +3,12 @@ const previewPanel = document.querySelector('.preview-panel .container');
 const editor = document.querySelector('.editor');
 let slideCounter = 1
 
-let initialHeight = previewPanel.offsetHeight-2 + 'px';
+let initialHeight = previewPanel.offsetHeight-10 + 'px';
+document.querySelector('.slide.active .content').style.height = 
+		document.querySelector('.slide.active').offsetHeight/1.22 + 'px';
 
 newSlideBtn.addEventListener("click", function() {
+	slideCounter++;
 	document.querySelector('.preview.active').classList.toggle('active');
 	const preview = document.createElement('div');
 		preview.classList.add('preview', 'active');
@@ -16,8 +19,11 @@ newSlideBtn.addEventListener("click", function() {
 	const slide = document.createElement('div');
 		slide.classList.add('slide', 'active');
 		slide.id = slideCounter + 's';
+		slide.innerHTML = `<div class='content'>${slideCounter}</div>`;
 	editor.appendChild(slide);
-	slideCounter++;
 
+	// setting height for some elements
+	document.querySelector('.slide.active .content').style.height = 
+			document.querySelector('.slide.active').offsetHeight/1.22 + 'px';
 	previewPanel.style.height = initialHeight;
 });
