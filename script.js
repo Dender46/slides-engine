@@ -4,8 +4,6 @@ const editor = document.querySelector('.editor');
 let slideCounter = 1
 
 let initialHeight = previewPanel.offsetHeight-10 + 'px';
-document.querySelector('.slide.active .content').style.height = 
-		document.querySelector('.slide.active').offsetHeight/1.22 + 'px';
 
 newSlideBtn.addEventListener("click", function() {
 	slideCounter++;
@@ -23,7 +21,5 @@ newSlideBtn.addEventListener("click", function() {
 	editor.appendChild(slide);
 
 	// setting height for some elements
-	document.querySelector('.slide.active .content').style.height = 
-			document.querySelector('.slide.active').offsetHeight/1.22 + 'px';
 	previewPanel.style.height = initialHeight;
 });
