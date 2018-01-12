@@ -39,7 +39,12 @@ newSlideBtn.addEventListener("click", function() {
 	const slide = document.createElement('div');
 		slide.classList.add('slide', 'active');
 		slide.dataset.index = slideCounter;
-		slide.innerHTML = `<div class='content'>${slideCounter}</div>`;
+		slide.innerHTML = 
+			`<div class="content">
+				<input class="header" type="text" placeholder="I'm header!">
+				<hr>
+				<textarea class="body" type="text" placeholder="I'm text!"></textarea>
+			</div>`;
 	editor.appendChild(slide);
 });
 
