@@ -1,6 +1,10 @@
-* {
-	margin: 0;
-	padding: 0;
+/* DEFAULTS */
+* { margin: 0; padding: 0; box-sizing: border-box;}
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
 }
 
 html, body {
@@ -47,13 +51,17 @@ body {
 }
 
 /*to keep 16:9 aspect ratio*/
-.preview::before, .slide::before, .content::before {
+.preview::before,
+.slide::before,
+.content::before {
 	content: "";
 	float: left;
 	padding-bottom: 56.25%;
 }
 
-.preview::after, .slide::after, .content::after { /* to clear float */
+.preview::after,
+.slide::after,
+.content::after { /* to clear float */
 	content: " ";
 	clear: left;
 	display: table;
@@ -81,8 +89,27 @@ body {
 
 .slide .content {
 	width: 85%;
-	background-color: #eee;
+}
+
+.content > * {
+	margin: 1.8% 0;
+}
+
+.content .header, .body {
+	transform-origin: 0 0;
+	width: 100%;
+	height: 5vw;
+	padding-left: 20px;
+	font-size: 3vw;
+	border: none;
+}
+
+.content .body {
+	font-size: 2rem;
+	height: 21vw;
+	max-height: 21vw;
+	max-width: 100%;
 }
 
 .preview.active { box-shadow: 0 0 0 4px #F88193 inset; }
-.slide.active { display: flex; }
+.slide.active   { display: flex; }
