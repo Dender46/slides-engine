@@ -3,13 +3,18 @@
 <head>
 	<title>SlideShow</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
+	<script type="text/javascript" src="feather.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/screenfull.js/3.3.2/screenfull.min.js"></script>
 </head>
 <body>
 	<div class="preview-panel">
-		<button class="new-slide">+</button>
+		<button id="new-slide">+</button>
 		<div class="container">
 			<div class="preview active" data-index="0"></div>
 		</div>
+	</div>
+	<div class="tools">
+		<button id="fullscr"><i data-feather="maximize-2"></i></button>
 	</div>
 	<div class="editor">
 		<div class="slide active" data-index="0">
@@ -20,6 +25,6 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" src="script.js"></script>
+	<script src="script.js"></script>
 </body>
 </html>

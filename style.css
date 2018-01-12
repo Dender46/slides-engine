@@ -1,4 +1,9 @@
 /* DEFAULTS */
+:root{
+	--main: #e6e6e6;
+	--secondary: #fff;
+}
+
 * { margin: 0; padding: 0; box-sizing: border-box;}
 input:focus,
 select:focus,
@@ -10,22 +15,25 @@ button:focus {
 html, body {
 	width: 100%;
 	height: 100%; 
-	background-color: #E6E6E6;
+	background-color: var(--main);
 }
 
 body {
 	display: grid;
 	grid-template-columns: 1fr 6fr;
+	grid-template-rows: 1fr 10fr
 }
 
 .preview-panel {
+	grid-row-start: 1; 
+	grid-row-end: 3; 
+	background-color: var(--secondary);
 	box-sizing: border-box;
+	flex-direction: column;
 	width: 100%;
 	height: 100%;
-	display: flex;
-	flex-direction: column;
 	padding: 16px;
-	background-color: #FFF;
+	display: flex;
 }
 
 .preview-panel .container {
@@ -34,21 +42,25 @@ body {
 	overflow: auto;
 }
 
-.new-slide {
-	width: 1.75vw;
-	height: 1.75vw; 
-	margin-bottom: 16px;
-	font-size: 1.5vw;
+button {
 	background-color: #F35454;
 	color: #FFF;
 	border: none;
 	transition: all 0.1s;
 }
 
-.new-slide:active { 
+button:active { 
 	background-color: #BF4242;
-	transform: scale(0.95);
+	transform: scale(0.92);
 }
+
+#new-slide {
+	width: 1.75vw;
+	height: 1.75vw; 
+	margin-bottom: 16px;
+	font-size: 1.5vw;
+}
+
 
 /*to keep 16:9 aspect ratio*/
 .preview::before,
@@ -61,7 +73,7 @@ body {
 
 .preview::after,
 .slide::after,
-.content::after { /* to clear float */
+.content::after {  /*to clear float*/ 
 	content: " ";
 	clear: left;
 	display: table;
@@ -73,18 +85,30 @@ body {
 	background-color: #E6E6E6;
 }
 
+.tools {
+	padding: 1.2vw;
+	padding-left: 7.9vw;
+}
+
+#fullscr {
+	width: 50px;
+	height: 50px;
+	padding-top: 2px; 
+}
+
 .editor {
 	display: flex;
-	justify-content: center;
 	align-items: center;
+	flex-direction: column;
 }
 
 .slide {
 	display: none;
 	justify-content: center;
 	align-items: center;
-	width: 80%;
+	width: 70vw;
 	background-color: #FFF;
+	transition: all 1s;
 }
 
 .slide .content {
@@ -93,6 +117,12 @@ body {
 
 .content > * {
 	margin: 1.8% 0;
+}
+
+hr {
+	height: 3px;
+	border: none;
+	background-color: #BBB;
 }
 
 .content .header, .body {
@@ -105,7 +135,8 @@ body {
 }
 
 .content .body {
-	font-size: 2rem;
+	font-size: 1.4vw;
+	line-height: 2;
 	height: 21vw;
 	max-height: 21vw;
 	max-width: 100%;

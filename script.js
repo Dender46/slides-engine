@@ -1,14 +1,18 @@
-const newSlideBtn  = document.querySelector('.new-slide');
+const newSlideBtn  = document.querySelector('#new-slide');
 const previewPanel = document.querySelector('.preview-panel .container');
 const editor 	   = document.querySelector('.editor');
-const previews = previewPanel.children;
-const slides   = editor.children;
+const slides   	   = editor.children;
+const previews 	   = previewPanel.children;
 let slideCounter   = 0;
 let slideCurrIndex = 0;
 
 // setting height for some items
 let initialHeight = previewPanel.offsetHeight-2 + 'px';
 previewPanel.style.height = initialHeight;
+
+previews[0].addEventListener('click', function() {
+	return selectSlide(0)
+});
 
 function selectSlide(next) {
 	previews[slideCurrIndex].classList.toggle('active');
@@ -18,9 +22,21 @@ function selectSlide(next) {
 	slideCurrIndex = next;
 }
 
-previews[0].addEventListener('click', function() {
-	return selectSlide(0)
-});
+function FullScreen() {
+	let width  = document.querySelector('.slide.active').offsetWidth;
+	editor.style.transform = 'scale(1.43)';
+	editor.style.width  = width + 'px';
+	screenfull.request(editor);
+}
+
+screenfull.on('change', () => {
+	if (!screenfull.isFullscreen) {
+		editor.style.width  = '100%';
+		editor.style.transform = 'scale(1)';
+	}
+})
+
+document.querySelector('#fullscr').addEventListener('click', FullScreen);
 
 newSlideBtn.addEventListener("click", function() {
 	slideCounter++;
@@ -48,8 +64,6 @@ newSlideBtn.addEventListener("click", function() {
 	editor.appendChild(slide);
 });
 
-
-
 document.addEventListener('keydown', function(e) {
 	if (e.keyCode == 38) {
 		if (slideCurrIndex == 0)
@@ -62,3 +76,5 @@ document.addEventListener('keydown', function(e) {
 		selectSlide(slideCurrIndex+1);
 	}
 });
+
+feather.replace();
