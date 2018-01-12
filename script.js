@@ -15,7 +15,7 @@ function selectSlide() {
 	previews[this.dataset.index].classList.toggle('active');
 	slides[slideCurrIndex]    .classList.toggle('active');
 	slides[this.dataset.index].classList.toggle('active');
-	slideCurrIndex = this.dataset.index;
+	slideCurrIndex = parseInt(this.dataset.index);
 }
 
 previews[0].addEventListener('click', selectSlide);
