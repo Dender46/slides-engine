@@ -10,15 +10,17 @@ let slideCurrIndex = 0;
 let initialHeight = previewPanel.offsetHeight-2 + 'px';
 previewPanel.style.height = initialHeight;
 
-function selectSlide() {
-	previews[slideCurrIndex]    .classList.toggle('active');
-	previews[this.dataset.index].classList.toggle('active');
-	slides[slideCurrIndex]    .classList.toggle('active');
-	slides[this.dataset.index].classList.toggle('active');
-	slideCurrIndex = parseInt(this.dataset.index);
+function selectSlide(next) {
+	previews[slideCurrIndex].classList.toggle('active');
+	slides[slideCurrIndex]  .classList.toggle('active');
+	previews[next].classList.toggle('active');
+	slides[next]  .classList.toggle('active');
+	slideCurrIndex = next;
 }
 
-previews[0].addEventListener('click', selectSlide);
+previews[0].addEventListener('click', function() {
+	return selectSlide(0)
+});
 
 newSlideBtn.addEventListener("click", function() {
 	slideCounter++;
@@ -27,7 +29,9 @@ newSlideBtn.addEventListener("click", function() {
 	const preview = document.createElement('div');
 		preview.classList.add('preview', 'active');
 		preview.dataset.index = slideCounter;
-		preview.addEventListener('click', selectSlide);
+		preview.addEventListener('click', function() {
+			return selectSlide(parseInt(this.dataset.index));
+		});
 	previewPanel.appendChild(preview);
 
 	
@@ -45,19 +49,11 @@ document.addEventListener('keydown', function(e) {
 	if (e.keyCode == 38) {
 		if (slideCurrIndex == 0)
 			return;	
-		previews[slideCurrIndex]  .classList.toggle('active');
-		previews[slideCurrIndex-1].classList.toggle('active');
-		slides[slideCurrIndex]  .classList.toggle('active');
-		slides[slideCurrIndex-1].classList.toggle('active');
-		slideCurrIndex--;
+		selectSlide(slideCurrIndex-1);
 	}
 	if (e.keyCode == 40) {
 		if (slideCurrIndex == previews.length-1)
-			return;	
-		previews[slideCurrIndex]  .classList.toggle('active');
-		previews[slideCurrIndex+1].classList.toggle('active');
-		slides[slideCurrIndex]  .classList.toggle('active');
-		slides[slideCurrIndex+1].classList.toggle('active');
-		slideCurrIndex++;
+			return;
+		selectSlide(slideCurrIndex+1);
 	}
 });
