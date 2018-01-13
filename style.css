@@ -16,10 +16,10 @@ html, body {
 	width: 100%;
 	height: 100%; 
 	background-color: var(--main);
-   /* background: #5961f9;
-    background: -webkit-linear-gradient(top right,#ee9ae5,#5961f9);
-    background: -moz-linear-gradient(top right,#ee9ae5,#5961f9);
-    background: linear-gradient(top right,#ee9ae5,#5961f9);  */     
+    background: #e0eafc;
+    background: -webkit-linear-gradient(top,#e0eafc,#bad1fc);
+    background: -moz-linear-gradient(top,#e0eafc,#bad1fc);
+    background: linear-gradient(top,#e0eafc,#bad1fc);        
 }
 
 body {
