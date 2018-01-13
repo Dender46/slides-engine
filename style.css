@@ -1,7 +1,7 @@
 /* DEFAULTS */
 :root{
-	--main: #e6e6e6;
-	--secondary: #fff;
+	--main: #E4E9F3;
+	--secondary: #F53141;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box;}
@@ -16,20 +16,24 @@ html, body {
 	width: 100%;
 	height: 100%; 
 	background-color: var(--main);
+   /* background: #5961f9;
+    background: -webkit-linear-gradient(top right,#ee9ae5,#5961f9);
+    background: -moz-linear-gradient(top right,#ee9ae5,#5961f9);
+    background: linear-gradient(top right,#ee9ae5,#5961f9);  */     
 }
 
 body {
 	display: grid;
 	grid-template-columns: 1fr 6fr;
-	grid-template-rows: 1fr 10fr
+	grid-template-rows: 1fr 8fr
 }
 
 .preview-panel {
+	background-color: #fff;
+	flex-direction: column;
+	box-sizing: border-box;
 	grid-row-start: 1; 
 	grid-row-end: 3; 
-	background-color: var(--secondary);
-	box-sizing: border-box;
-	flex-direction: column;
 	width: 100%;
 	height: 100%;
 	padding: 16px;
@@ -37,22 +41,20 @@ body {
 }
 
 .preview-panel .container {
-	height: 100%;
 	width: 100%;
+	height: 100%;
 	overflow: auto;
 }
 
 button {
-	background-color: #F35454;
+	background-color: var(--secondary);
 	color: #FFF;
 	border: none;
 	transition: all 0.1s;
 }
 
-button:active { 
-	background-color: #BF4242;
-	transform: scale(0.92);
-}
+button:hover { background-color: #D92B39; }
+button:active { transform: scale(0.92); }
 
 #new-slide {
 	width: 1.75vw;
@@ -82,11 +84,17 @@ button:active {
 
 .preview {
 	margin-bottom: 16px;
-	background-color: #E6E6E6;
+	background-color: var(--main);
+	transition: all 0.07s;
+}
+
+.preview:hover {
+	transform: scale(0.97);
 }
 
 .tools {
-	padding: 1.2vw;
+	display: flex;
+	align-items: center;
 	padding-left: 7.9vw;
 }
 
@@ -94,6 +102,15 @@ button:active {
 	width: 50px;
 	height: 50px;
 	padding-top: 2px; 
+}
+
+.tip {
+	display: inline-block;
+	background-color: rgba(0,0,0,0.1);
+	color: rgba(0,0,0,0.4);
+	padding: 0.5vw;
+	border-radius: 5px;
+	margin-left: 1.7vw;
 }
 
 .editor {
@@ -108,7 +125,6 @@ button:active {
 	align-items: center;
 	width: 70vw;
 	background-color: #FFF;
-	transition: all 1s;
 }
 
 .slide .content {
@@ -122,7 +138,7 @@ button:active {
 hr {
 	height: 3px;
 	border: none;
-	background-color: #BBB;
+	background-color: #C9CBD1;
 }
 
 .content .header, .body {
@@ -142,5 +158,13 @@ hr {
 	max-width: 100%;
 }
 
+.slide footer {
+	margin: 0;
+	position: absolute;
+	font-size: 1vw;
+	bottom: 2.5vw;
+	right: 3.5vw;
+}
+
 .preview.active { box-shadow: 0 0 0 4px #F88193 inset; }
-.slide.active   { display: flex; }
+.slide.active   { display: flex; position: relative;}

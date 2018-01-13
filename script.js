@@ -6,10 +6,6 @@ const previews 	   = previewPanel.children;
 let slideCounter   = 0;
 let slideCurrIndex = 0;
 
-// setting height for some items
-let initialHeight = previewPanel.offsetHeight-2 + 'px';
-previewPanel.style.height = initialHeight;
-
 previews[0].addEventListener('click', function() {
 	return selectSlide(0)
 });
@@ -20,7 +16,33 @@ function selectSlide(next) {
 	previews[next].classList.toggle('active');
 	slides[next]  .classList.toggle('active');
 	slideCurrIndex = next;
+
+	setPageNumber(next+1);
 }
+
+function setPageNumber(num) {
+	document.querySelector('.slide.active footer').textContent = num; 
+}
+
+function deleteSlide() {
+	let index = parseInt(document.querySelector('.slide.active').dataset.index);
+	if (index != 0)
+		selectSlide(index-1);
+	else if (index != slideCounter)
+		selectSlide(index+1);
+	previews[index].remove();
+	slides[index].remove();
+	slideCounter--;
+	for (let i = index; i < previews.length; i++) {
+		previews[i].dataset.index -= 1;
+		slides[i]  .dataset.index -= 1;
+	}
+}
+
+document.addEventListener('keydown', e => {
+	if (e.keyCode == 46) // del key
+		deleteSlide();
+});
 
 function FullScreen() {
 	let width  = document.querySelector('.slide.active').offsetWidth;
@@ -41,6 +63,7 @@ document.querySelector('#fullscr').addEventListener('click', FullScreen);
 newSlideBtn.addEventListener("click", function() {
 	slideCounter++;
 	slideCurrIndex = slideCounter;
+	
 	document.querySelector('.preview.active').classList.toggle('active');
 	const preview = document.createElement('div');
 		preview.classList.add('preview', 'active');
@@ -49,7 +72,6 @@ newSlideBtn.addEventListener("click", function() {
 			return selectSlide(parseInt(this.dataset.index));
 		});
 	previewPanel.appendChild(preview);
-
 	
 	document.querySelector('.slide.active').classList.toggle('active');
 	const slide = document.createElement('div');
@@ -60,8 +82,10 @@ newSlideBtn.addEventListener("click", function() {
 				<input class="header" type="text" placeholder="I'm header!">
 				<hr>
 				<textarea class="body" type="text" placeholder="I'm text!"></textarea>
+				<footer></footer>
 			</div>`;
 	editor.appendChild(slide);
+	setPageNumber(slideCurrIndex+1);
 });
 
 document.addEventListener('keydown', function(e) {
