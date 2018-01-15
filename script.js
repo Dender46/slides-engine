@@ -17,6 +17,8 @@ function selectSlide(next) {
 	slides[next]  .classList.toggle('active');
 	slideCurrIndex = next;
 
+	previews[slideCurrIndex].scrollIntoView({behavior: "smooth"});
+
 	setPageNumber(next+1);
 }
 
@@ -46,6 +48,8 @@ function addSlide() {
 				<footer></footer>
 			</div>`;
 	editor.appendChild(slide);
+
+	preview.scrollIntoView({behavior: "smooth"});
 	setPageNumber(slideCurrIndex+1);
 }
 
@@ -66,6 +70,8 @@ function deleteSlide() {
 		previews[i].dataset.index -= 1;
 		slides[i]  .dataset.index -= 1;
 	}
+
+	previews[slideCurrIndex].scrollIntoView({behavior: "smooth"});
 	updatePreviewCounter();
 }
 
@@ -85,21 +91,6 @@ function updatePreviewCounter() {
 		preview.firstChild.textContent = parseInt(preview.dataset.index)+1;
 	})
 }
- 
-function addHeader() { 
-	let header = document.querySelector('.preview.active p'); 
-	if (!header) {
-		header = document.createElement('p');
-		header.classList.add('header');
-		document.querySelector('.preview.active').appendChild(header);
-	}
-	header.textContent = this.value;
-}
-
-function addBody() {
-	const body = document.createElement('p');
-	header = document.textContent = this.value;	
-}
 
 screenfull.on('change', () => {
 	if (!screenfull.isFullscreen) {
@@ -110,8 +101,6 @@ screenfull.on('change', () => {
 
 document.querySelector('#fullscr').addEventListener('click', FullScreen);
 
-document.querySelector('.slide.active input').addEventListener('keyup', addHeader);
-
 newSlideBtn.addEventListener("click", addSlide);
 
 document.addEventListener('keydown', function(e) {
@@ -119,11 +108,13 @@ document.addEventListener('keydown', function(e) {
 		if (slideCurrIndex == 0)
 			return;	
 		selectSlide(slideCurrIndex-1);
+		previews[slideCurrIndex].scrollIntoView(false);
 	}
 	if (e.keyCode == 40) { // down key
 		if (slideCurrIndex == previews.length-1)
 			return;
 		selectSlide(slideCurrIndex+1);
+		previews[slideCurrIndex].scrollIntoView(false);
 	}
 	if (e.keyCode == 46) // del key
 		deleteSlide();
