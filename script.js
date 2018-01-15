@@ -28,6 +28,7 @@ function addSlide() {
 	const preview = document.createElement('div');
 		preview.classList.add('preview', 'active');
 		preview.dataset.index = slideCounter;
+		preview.innerHTML =`<div class="pgnum">${slideCounter+1}</div>`;
 		preview.addEventListener('click', function() {
 			return selectSlide(parseInt(this.dataset.index));
 		});
@@ -65,6 +66,7 @@ function deleteSlide() {
 		previews[i].dataset.index -= 1;
 		slides[i]  .dataset.index -= 1;
 	}
+	updatePreviewCounter();
 }
 
 function FullScreen() {
@@ -76,6 +78,12 @@ function FullScreen() {
 
 function setPageNumber(num) {
 	document.querySelector('.slide.active footer').textContent = num; 
+}
+
+function updatePreviewCounter() {
+	[].forEach.call(previews, preview => {
+		preview.firstChild.textContent = parseInt(preview.dataset.index)+1;
+	})
 }
  
 function addHeader() { 
@@ -124,7 +132,5 @@ document.addEventListener('keydown', function(e) {
 	
 });
 
-document.addEventListener('keydown', e => {
-});
-
+updatePreviewCounter();
 feather.replace();

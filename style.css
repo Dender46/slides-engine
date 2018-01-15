@@ -75,6 +75,7 @@ button:active { transform: scale(0.92); }
 	font-size: 1.5vw;
 }
 
+
 .preview {
 	border: 2px solid #D4D4D4;
 	width: 9.5vw;
@@ -86,6 +87,12 @@ button:active { transform: scale(0.92); }
 
 .preview:hover {
 	transform: scale(0.97);
+}
+
+.preview .pgnum {
+	height: 5.34vw;
+	font-size: 0.85vw;
+
 }
 
 .tools {
