@@ -9,6 +9,8 @@ let slideCurrIndex = 0;
 previews[0].addEventListener('click', function() {
 	return selectSlide(0)
 });
+document.querySelector('.header').addEventListener('keyup', updatePreviewHeader);
+document.querySelector('.body')  .addEventListener('keyup', updatePreviewBody);
 
 function selectSlide(next) {
 	previews[slideCurrIndex].classList.toggle('active');
@@ -18,27 +20,28 @@ function selectSlide(next) {
 	slideCurrIndex = next;
 
 	previews[slideCurrIndex].scrollIntoView({behavior: "smooth"});
+	slides[slideCurrIndex].querySelector('input').focus();
 
 	setPageNumber(next+1);
 }
 
 function addSlide() {
 	slideCounter++;
-	slideCurrIndex = slideCounter;
 	
-	document.querySelector('.preview.active').classList.toggle('active');
 	const preview = document.createElement('div');
-		preview.classList.add('preview', 'active');
+		preview.classList.add('preview');
 		preview.dataset.index = slideCounter;
-		preview.innerHTML =`<div class="pgnum">${slideCounter+1}</div>`;
+		preview.innerHTML =`
+			<div class="pgnum">${slideCounter+1}</div>
+			<h5></h5>
+			<p></p>`;
 		preview.addEventListener('click', function() {
 			return selectSlide(parseInt(this.dataset.index));
 		});
 	previewPanel.appendChild(preview);
 	
-	document.querySelector('.slide.active').classList.toggle('active');
 	const slide = document.createElement('div');
-		slide.classList.add('slide', 'active');
+		slide.classList.add('slide');
 		slide.dataset.index = slideCounter;
 		slide.innerHTML = 
 			`<div class="content">
@@ -49,8 +52,12 @@ function addSlide() {
 			</div>`;
 	editor.appendChild(slide);
 
+	slide.querySelector('.header').addEventListener('keyup', updatePreviewHeader);
+	slide.querySelector('.body')  .addEventListener('keyup', updatePreviewBody);
+
 	preview.scrollIntoView({behavior: "smooth"});
-	setPageNumber(slideCurrIndex+1);
+	setPageNumber(slideCounter+1);
+	selectSlide(slideCounter);
 }
 
 function deleteSlide() {
@@ -73,6 +80,16 @@ function deleteSlide() {
 
 	previews[slideCurrIndex].scrollIntoView({behavior: "smooth"});
 	updatePreviewCounter();
+}
+
+function updatePreviewHeader() {
+	let header = previews[slideCurrIndex].querySelector('h5');
+	header.textContent = document.querySelector('.slide.active input').value;
+}
+
+function updatePreviewBody() {
+	let body = previews[slideCurrIndex].querySelector('p');
+	body.textContent = document.querySelector('.slide.active textarea').value;
 }
 
 function FullScreen() {
@@ -99,27 +116,25 @@ screenfull.on('change', () => {
 	}
 })
 
+newSlideBtn.addEventListener('click', addSlide);
+
 document.querySelector('#fullscr').addEventListener('click', FullScreen);
 
-newSlideBtn.addEventListener("click", addSlide);
+
 
 document.addEventListener('keydown', function(e) {
-	if (e.keyCode == 38) { // up key
-		if (slideCurrIndex == 0)
-			return;	
+	if (e.keyCode == 38 && slideCurrIndex !== 0) { // up key
 		selectSlide(slideCurrIndex-1);
 		previews[slideCurrIndex].scrollIntoView(false);
 	}
-	if (e.keyCode == 40) { // down key
-		if (slideCurrIndex == previews.length-1)
-			return;
+
+	if (e.keyCode == 40 && slideCurrIndex !== previews.length-1) { // down key
 		selectSlide(slideCurrIndex+1);
 		previews[slideCurrIndex].scrollIntoView(false);
 	}
+
 	if (e.keyCode == 46) // del key
 		deleteSlide();
-	if (e.keyCode == 107) // plus key
-		addSlide();
 	
 });
 
