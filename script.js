@@ -19,7 +19,7 @@ function selectSlide(next) {
 	slides[next]  .classList.toggle('active');
 	slideCurrIndex = next;
 
-	previews[slideCurrIndex].scrollIntoView({behavior: "smooth"});
+	previews[slideCurrIndex].scrollIntoView();
 	slides[slideCurrIndex].querySelector('input').focus();
 
 	setPageNumber(next+1);
@@ -55,7 +55,7 @@ function addSlide() {
 	slide.querySelector('.header').addEventListener('keyup', updatePreviewHeader);
 	slide.querySelector('.body')  .addEventListener('keyup', updatePreviewBody);
 
-	preview.scrollIntoView({behavior: "smooth"});
+	preview.scrollIntoView();
 	setPageNumber(slideCounter+1);
 	selectSlide(slideCounter);
 }
@@ -78,7 +78,7 @@ function deleteSlide() {
 		slides[i]  .dataset.index -= 1;
 	}
 
-	previews[slideCurrIndex].scrollIntoView({behavior: "smooth"});
+	previews[slideCurrIndex].scrollIntoView();
 	updatePreviewCounter();
 }
 
@@ -105,7 +105,7 @@ function setPageNumber(num) {
 
 function updatePreviewCounter() {
 	[].forEach.call(previews, preview => {
-		preview.firstChild.textContent = parseInt(preview.dataset.index)+1;
+		preview.querySelector('.pgnum').textContent = parseInt(preview.dataset.index)+1;
 	})
 }
 
@@ -120,17 +120,15 @@ newSlideBtn.addEventListener('click', addSlide);
 
 document.querySelector('#fullscr').addEventListener('click', FullScreen);
 
-
-
 document.addEventListener('keydown', function(e) {
 	if (e.keyCode == 38 && slideCurrIndex !== 0) { // up key
 		selectSlide(slideCurrIndex-1);
-		previews[slideCurrIndex].scrollIntoView(false);
+		previews[slideCurrIndex].scrollIntoView();
 	}
 
 	if (e.keyCode == 40 && slideCurrIndex !== previews.length-1) { // down key
 		selectSlide(slideCurrIndex+1);
-		previews[slideCurrIndex].scrollIntoView(false);
+		previews[slideCurrIndex].scrollIntoView();
 	}
 
 	if (e.keyCode == 46) // del key
