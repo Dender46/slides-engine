@@ -6,12 +6,6 @@ const previews 	   = previewPanel.children;
 let slideCounter   = 0;
 let slideCurrIndex = 0;
 
-previews[0].addEventListener('click', function() {
-	return selectSlide(0)
-});
-document.querySelector('.header').addEventListener('keyup', updatePreviewHeader);
-document.querySelector('.body')  .addEventListener('keyup', updatePreviewBody);
-
 function selectSlide(next) {
 	previews[slideCurrIndex].classList.toggle('active');
 	slides[slideCurrIndex]  .classList.toggle('active');
@@ -25,6 +19,14 @@ function selectSlide(next) {
 	setPageNumber(next+1);
 }
 
+previewPanel.addEventListener('click', function(e) {
+	if (e.target.className == 'container')
+		return;
+	if (e.target.className == 'preview')
+		return selectSlide(e.target.dataset.index)
+	return selectSlide(e.target.parentNode.dataset.index);
+});
+
 function addSlide() {
 	slideCounter++;
 	
@@ -35,9 +37,6 @@ function addSlide() {
 			<div class="pgnum">${slideCounter+1}</div>
 			<h5></h5>
 			<p></p>`;
-		preview.addEventListener('click', function() {
-			return selectSlide(parseInt(this.dataset.index));
-		});
 	previewPanel.appendChild(preview);
 	
 	const slide = document.createElement('div');
@@ -51,9 +50,6 @@ function addSlide() {
 				<footer></footer>
 			</div>`;
 	editor.appendChild(slide);
-
-	slide.querySelector('.header').addEventListener('keyup', updatePreviewHeader);
-	slide.querySelector('.body')  .addEventListener('keyup', updatePreviewBody);
 
 	preview.scrollIntoView();
 	setPageNumber(slideCounter+1);
@@ -92,13 +88,6 @@ function updatePreviewBody() {
 	body.textContent = document.querySelector('.slide.active textarea').value;
 }
 
-function FullScreen() {
-	let width  = document.querySelector('.slide.active').offsetWidth;
-	editor.style.transform = 'scale(1.43)';
-	editor.style.width  = width + 'px';
-	screenfull.request(editor);
-}
-
 function setPageNumber(num) {
 	document.querySelector('.slide.active footer').textContent = num; 
 }
@@ -109,16 +98,32 @@ function updatePreviewCounter() {
 	})
 }
 
+function FullScreen() {
+	let width  = document.querySelector('.slide.active').offsetWidth;
+	editor.style.transform = 'scale(1.43)';
+	editor.style.width  = width + 'px';
+	screenfull.request(editor);
+}
+
 screenfull.on('change', () => {
 	if (!screenfull.isFullscreen) {
 		editor.style.width  = '100%';
 		editor.style.transform = 'scale(1)';
 	}
-})
+});
 
 newSlideBtn.addEventListener('click', addSlide);
 
 document.querySelector('#fullscr').addEventListener('click', FullScreen);
+
+editor.addEventListener('keyup', function(e) {
+	let target = e.target;
+	if (target.className == 'header') {
+		target.addEventListener('keyup', updatePreviewHeader);
+		return;
+	} else
+	target.addEventListener('keyup', updatePreviewBody);
+});
 
 document.addEventListener('keydown', function(e) {
 	if (e.keyCode == 38 && slideCurrIndex !== 0) { // up key
@@ -133,7 +138,6 @@ document.addEventListener('keydown', function(e) {
 
 	if (e.keyCode == 46) // del key
 		deleteSlide();
-	
 });
 
 updatePreviewCounter();
